@@ -30,7 +30,7 @@ psql -U postgres -c "CREATE DATABASE scraping;"
 .\venv\Scripts\python.exe manage.py migrate
 ```
 
-4) (Opcional) Poblar datos iniciales ejecutando el scraper desde CLI:
+4) Poblar datos iniciales ejecutando el scraper desde CLI:
 
 ```powershell
 .\venv\Scripts\python.exe manage.py scrapecountries
@@ -40,7 +40,6 @@ psql -U postgres -c "CREATE DATABASE scraping;"
 
 ```powershell
 .\venv\Scripts\python.exe manage.py runserver
-# Abrir http://127.0.0.1:8000/paises/ para ver la lista pública
 ```
 
 Uso de `setup.ps1` (Windows)
