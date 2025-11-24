@@ -1,0 +1,29 @@
+# Python
+*.pyc
+__pycache__/
+
+# Virtual environment
+venv/
+ENV/
+.env
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+/media
+/staticfiles
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Migrations (keep initial only)
+# If you prefer to track migrations, remove the following line
+**/migrations/*.pyc
+**/migrations/*.py~
+
+# But ensure we keep the initial migration in repo (countries/migrations/0001_initial.py)

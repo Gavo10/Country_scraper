@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lista de Paises</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ddd; padding: 8px; }
+    th { background: #f4f4f4; text-align: left; }
+  </style>
+</head>
+<body>
+  {% load humanize %}
+  <h1>Lista de Países</h1>
+
+  {% if messages %}
+    <ul>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <form method="post" action="{% url 'countries:scrapear' %}" style="margin-bottom: 16px;">
+    {% csrf_token %}
+    <button type="submit">Ejecutar scraping</button>
+  </form>
+  
+  <!-- Formulario de filtros -->
+  <form method="get" action="" style="margin-bottom:16px;">
+    <label>Nombre: <input type="text" name="q_nombre" value="{{ request.GET.q_nombre }}"></label>
+    <label>Capital: <input type="text" name="q_capital" value="{{ request.GET.q_capital }}"></label>
+    <label>Min población: <input type="number" name="min_poblacion" value="{{ request.GET.min_poblacion }}"></label>
+    <label>Max población: <input type="number" name="max_poblacion" value="{{ request.GET.max_poblacion }}"></label>
+    <button type="submit">Filtrar</button>
+    <a href="{% url 'countries:paises_list' %}">Limpiar</a>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Capital</th>
+        <th>Población</th>
+        <th>Área (km²)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in paises %}
+      <tr>
+        <td>{{ p.nombre }}</td>
+        <td>{{ p.capital }}</td>
+        <td>{{ p.poblacion|intcomma }}</td>
+        <td>{{ p.area }}</td>
+        <td>
+          <form method="post" action="{% url 'countries:borrar_pais' p.pk %}" onsubmit="return confirm('¿Seguro que deseas eliminar este país (borrado lógico)?');">
+            {% csrf_token %}
+            <button type="submit">Borrar</button>
+          </form>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4">No hay países guardados.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
